@@ -24,7 +24,7 @@ var masM = new Array(11);
 	for (var k=0; k<=masM.length-1; k++) {
 		masM[k] = new Array(16);
 	}
-var socket = new WebSocket("ws://localhost:8081");
+var socket = new WebSocket("ws://" + window.location.host.split(':')[0] + ":8081");
 var arrAll = [];
 
 

@@ -17,7 +17,7 @@ router.post('/', function (req, res,next) {
 //  console.log(req.body.username);
  w.createPlayer(req.body.username, playerId);
   playerId=playerId+1;
-  players.push( { id: playerId, ip: req.connection.remoteAddress } );
+  players.push( { id: playerId, ip: req.connection.remoteAddress.replace('::ffff:', '') } );
 });
 
 module.exports = router;

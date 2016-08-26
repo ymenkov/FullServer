@@ -97,6 +97,14 @@ playerId=0;
 clients = [];
 players = [];
 
+function getPlayerIdbyIp(ip){
+    for(var i = 0; i < players.length; i++){
+        if(players[i].ip == ip)
+            return players[i].id;
+    }
+    return 999;
+}
+
 WebSocketServer = new require('ws');
 var wor= require('./world');
 id = -1;
@@ -107,20 +115,10 @@ webSocketServer = new WebSocketServer.Server({
 
 webSocketServer.on('connection', function(ws) {
 
+    var playerId = getPlayerIdbyIp(ws.upgradeReq.connection.remoteAddress);
+    var clientId = clients.push({ws: ws, playerId: playerId });
 
-    // for (var key in clients) {
-    //     if (clients[key]==ws.upgradeReq.connection.remoteAddress){
-    //         console.log("такой уже был")
-    //       //  ws.close();
-    //     }
-    // }
-    id=id+1;
-    console.dir(players);
-    clients.push = ({ws: ws, id: id});
-
-
-
-  console.log("новое соединение " + id);
+  console.log("новое соединение " + playerId + " : " + clientId);
 
 
   ws.on('message', function(message) {
@@ -132,19 +130,17 @@ webSocketServer.on('connection', function(ws) {
               break;
 
           case 'create':
+              if(playerId == mes.player_id)
                   w.buyObject(mes.type,mes.player_id,mes.coord);
               break;
           default:
               break;
       }
-
-
-
   });
 
   ws.on('close', function() {
     console.log('соединение закрыто ' + id);
-    delete clients[id];
+    delete clients[clientId];
   });
 
 });
@@ -156,9 +152,6 @@ console.log("Серевер работает 8081");
 
 setInterval(function () {
     clients.forEach(function (client) {
-
-    })
-    for (var key in clients) {
-        clients[key].send(JSON.stringify(w.getAll(key)));
-    }
+        client.ws.send(JSON.stringify(w.getAll(client.playerId)));
+    });
 }, 300);

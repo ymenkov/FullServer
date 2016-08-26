@@ -4,11 +4,13 @@ function signIn(){
 
 	var xhr = new XMLHttpRequest();
 	var body = 'username='+val;
-	xhr.open("POST", 'http://localhost:3000/game');
+	xhr.open("POST", 'http://' + window.location.host + '/game');
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
 	xhr.send(body);
 	xhr.onload = function() {
-	alert(this.responseText);
-	document.location.href = window.location.host + 'game/' + this.responseText;
+		//alert(this.responseText);
+		var path = 'http://' + window.location.host + '/game/' + this.responseText;
+		document.location.href = path;
+		console.log(path)
 	}
 }
