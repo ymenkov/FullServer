@@ -1,12 +1,8 @@
 
-var throne=[];
-throne[0]={i:5,j:0};
-throne[1]={i:5,j:15};
 var hw=50;
 var marg=10;
-var player="Валерий";
+// var player="Валерий";
 
-//w.createObject('ORK', 0, [1,1]);
 
  var player_id=window.location.pathname.split('game/')[1];
 
@@ -18,12 +14,16 @@ player_id = 999;
 //alert(player_id)
 //w.createPlace();
 //arrAll = w.getAll();
-var c = new CONTROLLER();
+var width = 12;
+var height = 20;
 
-var masM = new Array(11);
-	for (var k=0; k<=masM.length-1; k++) {
-		masM[k] = new Array(16);
-	}
+var c = new CONTROLLER(width, height);
+
+var masM = new Array(width);
+for (var k=0; k<masM.length; k++)
+	masM[k] = new Array(height);
+
+
 var socket = new WebSocket("ws://" + window.location.host.split(':')[0] + ":8081");
 var arrAll = [];
 
@@ -66,8 +66,8 @@ function VIEW(){
 
 	this.render = function(){
 		document.getElementById('test').innerHTML = "";
-		for (var i=0;i<=10;i++){
-			for (var j=0;j<=15;j++){
+		for (var i=0;i<masM.length;i++){
+			for (var j=0;j<masM[i].length;j++){
 				var elem=document.createElement('div');
 				elem.style.backgroundColor = "white";
 				if (searchPlace(i,j)) {
@@ -190,6 +190,9 @@ function VIEW(){
 				case 'PLAYER':
 					var t = document.getElementById("Gold"); 
 					t.innerHTML = "Gold : "+object.gold;
+					var t = document.getElementById("player");
+					t.innerHTML = "Имя: "+object.player_name;
+					t.style.backgroundColor = generateColor(object.player_id);
 				break;
 
 				case 'WALL' :
@@ -231,8 +234,19 @@ function VIEW(){
 		this.coord=coord;
 		this.player_id=player_id;
 	}
+
 this.start_game=function(){
 	var newTower = new Obr("start","TOWER",[1,1],23)
+	socket.send(JSON.stringify(newTower));
+}
+
+this.buy_hunter=function(){
+	var newTower = new Obr("create","HUNTER",[width/2,height/2],player_id)
+	socket.send(JSON.stringify(newTower));
+}
+
+this.buy_troll=function(){
+	var newTower = new Obr("create","TROLL",[width/2,height/2],player_id)
 	socket.send(JSON.stringify(newTower));
 }
 

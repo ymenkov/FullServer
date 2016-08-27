@@ -114,7 +114,7 @@ webSocketServer = new WebSocketServer.Server({
 });
 
 webSocketServer.on('connection', function(ws) {
-
+    console.dir(players);
     var playerId = getPlayerIdbyIp(ws.upgradeReq.connection.remoteAddress);
     var clientId = clients.push({ws: ws, playerId: playerId });
 
@@ -140,18 +140,31 @@ webSocketServer.on('connection', function(ws) {
 
   ws.on('close', function() {
     console.log('соединение закрыто ' + id);
-    delete clients[clientId];
+    clients.splice(clientId, 1);
   });
+
+    ws.on('disconnect',function(){
+        console.log('соединение disconnect ' + id);
+        clients.splice(clientId, 1);
+    });
 
 });
 
-w = new wor.World(11,16);
+w = new wor.World(12,20);
 // w.createPlayer("Инокентий", 0);
 // w.createPlayer("222222", 1);
 console.log("Серевер работает 8081");
 
 setInterval(function () {
-    clients.forEach(function (client) {
-        client.ws.send(JSON.stringify(w.getAll(client.playerId)));
+    clients.forEach(function (client, clientId) {
+        try {
+            if (client.ws && client.ws.send) {
+                client.ws.send(JSON.stringify(w.getAll(client.playerId)));
+            }
+        } catch(e){
+            client.ws.close();
+            clients.splice(clientId, 1);
+            console.error(e.message);
+        }
     });
 }, 300);

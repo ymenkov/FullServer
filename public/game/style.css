@@ -96,9 +96,18 @@ div.game-object img{
 
 #Gold {
 	position: absolute;
-	top:730px;
-    left:110px;
+	bottom:10%;
+    left:10px;
 	display:inline-block;
+}
+
+#player {
+	position: absolute;
+	bottom:17%;
+	left:10px;
+	display:inline-block;
+	padding: 10px;
+	color: white;
 }
 
 #ololo {
@@ -143,4 +152,20 @@ select {
 .hp-strike div{
     background: #2dcf2d;
     height: 100%;
+}
+
+#controller {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 200px;
+	height: 500px;
+	border: 1px solid grey;
+	background-color: rgba(255,255,255, 0.8);
+	z-index: 99999;
+}
+
+#controller input {
+	margin-top: 20px;
+	margin-left: 10px;
 }

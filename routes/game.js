@@ -13,11 +13,11 @@ router.get('/*', function(req, res, next) {
 });
 
 router.post('/', function (req, res,next) {
-  res.send(JSON.stringify(playerId));
-//  console.log(req.body.username);
- w.createPlayer(req.body.username, playerId);
-  playerId=playerId+1;
-  players.push( { id: playerId, ip: req.connection.remoteAddress.replace('::ffff:', '') } );
+    playerId = playerId > 3? 999 : playerId;
+    res.send(JSON.stringify(playerId));
+    w.createPlayer(req.body.username, playerId);
+    players.push( { id: playerId, ip: req.connection.remoteAddress.replace('::ffff:', '') } );
+    playerId=playerId+1;
 });
 
 module.exports = router;

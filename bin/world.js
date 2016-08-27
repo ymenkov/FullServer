@@ -1,73 +1,6 @@
 var MAP= require('./gameMap');
 
-var gameObjects = [{
-    "type": "CASTLE",
-    "hp": 100000,
-    "price": 1000,
-    "moveTargets": false,
-    "attackTargets": ["ORK", "HUNTER"],
-    "damage": 100,
-    "moveSpeed": 0,
-    "attackSpeed": 1,
-    "attackRadius": 4,
-    "block": true,
-    "spawnInterval": 30
-}, {
-    "type": "ORK",
-    "hp": 1000,
-    "price": 100,
-    "moveTargets": ["TOWER","CASTLE", "HUNTER"],
-    "attackTargets": ["TOWER","CASTLE", "HUNTER","WALL"],
-    "damage": 100,
-    "moveSpeed": 1,
-    "attackSpeed": 1,
-    "attackRadius": 2,
-    "block": false
-}, {
-    "type": "TOWER",
-    "hp": 1000,
-    "price": 100,
-    "moveTargets": false,
-    "attackTargets": ["CASTLE", "ORK","HUNTER"],
-    "damage": 100,
-    "moveSpeed": 1,
-    "attackSpeed": 1,
-    "attackRadius": 4,
-    "block": true
-},{
-    "type": "PLACE",
-    "hp": 1,
-    "price": 100,
-    "moveTargets": false,
-    "attackTargets": [],
-    "damage": 0,
-    "moveSpeed": 0,
-    "attackSpeed": 0,
-    "attackRadius": 0,
-    "block": false
-},{
-    "type": "WALL",
-    "hp": 1000,
-    "price": 100,
-    "moveTargets": false,
-    "attackTargets": [],
-    "damage": 0,
-    "moveSpeed": 0,
-    "attackSpeed": 0,
-    "attackRadius": 0,
-    "block": true
-},{
-    "type": "HUNTER",
-    "hp": 1000,
-    "price": 100,
-    "moveTargets": ["ORK"],
-    "attackTargets": ["ORK"],
-    "damage": 500,
-    "moveSpeed": 2,
-    "attackSpeed": 2,
-    "attackRadius": 2,
-    "block": false
-}];
+var gameObjects = require('./gameConfig');
 
 function World(width, height){
 
@@ -78,13 +11,13 @@ function World(width, height){
    // var playerId = 0;
     var timerId = null;
     var id = 0;
-    var thrones=[[2,2],[8,13],[2,13],[8,2]]
+    var thrones=[[1,1],[width-2,height-2],[1,height-2],[width-2,1]]
 
     me.gameObjects = gameObjects;
     me.gameMap = new MAP.GameMap(width, height);
 
     me.getAll = function(playerid){
-        var gold= findObjectInArray(players, 'id', playerid).gold;
+        var player= findObjectInArray(players, 'id', playerid);
         var rez= all_obj.filter(function(obj){ return obj.hp != 'del' }).map(function(obj){
             return {
                 type: obj.type,
@@ -99,7 +32,9 @@ function World(width, height){
 
         rez.push({
             type: 'PLAYER',
-            gold: gold
+            gold: player.gold,
+            player_name: player.name,
+            player_id: player.id
         });
 
         return rez;
@@ -126,8 +61,8 @@ function World(width, height){
     };
 
     this.buildCastle=function(coord,player_id){
-        for (var i=0;i<=10;i++){
-            for(var j=0;j<=15;j++){
+        for (var i=0;i<width;i++){
+            for(var j=0;j<height;j++){
                 if ((Math.abs((i-coord[0]))<3)&&(Math.abs((j-coord[1])))<3){
                     if ((i==coord[0])&&(j==coord[1])){}else{
                         var config = findObjectInArray(gameObjects, 'type', "PLACE");

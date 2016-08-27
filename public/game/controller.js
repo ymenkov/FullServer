@@ -1,6 +1,6 @@
 var statusController=0;
 
-function CONTROLLER(){
+function CONTROLLER(width, height){
 	function Obr(make,type,coord,plyaer_id){
 		this.make=make;
 		this.type=type;
@@ -8,10 +8,13 @@ function CONTROLLER(){
 		this.player_id=player_id;
 	}
 
+	var width = width;
+	var height = height;
+
 	this.kappa = function(event){
 		if(statusController==0){
-			for (var i=0;i<=10;i++){
-				for (var j=0;j<=15;j++){
+			for (var i=0;i<width;i++){
+				for (var j=0;j<height;j++){
 					if (masM[i][j]==event.target) {
 						var newWall = new Obr("create","WALL",[i,j],player_id)
 						socket.send(JSON.stringify(newWall));
@@ -21,8 +24,8 @@ function CONTROLLER(){
 			}
 		}
 		if(statusController==1){
-			for (var i=0;i<=10;i++){
-				for (var j=0;j<=15;j++){
+			for (var i=0;i<width;i++){
+				for (var j=0;j<height;j++){
 					if (masM[i][j]==event.target) {
 						var newTower = new Obr("create","TOWER",[i,j],player_id)
 						socket.send(JSON.stringify(newTower));
@@ -33,8 +36,8 @@ function CONTROLLER(){
 		}
 
 		if(statusController==2){
-			for (var i=0;i<=10;i++){
-				for (var j=0;j<=15;j++){
+			for (var i=0;i<width;i++){
+				for (var j=0;j<height;j++){
 					if (masM[i][j]==event.target) {
 						var newWall = new Obr("create","PLACE",[i,j],player_id)
 						socket.send(JSON.stringify(newWall));
