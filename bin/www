@@ -126,11 +126,12 @@ webSocketServer.on('connection', function(ws) {
       console.log(mes)
       switch(mes.make){
           case 'start':
-              w.startWorld();
+              if(playerId === 0)
+                w.startWorld();
               break;
 
           case 'create':
-              if(playerId == mes.player_id)
+              if(w.worldStart && playerId == mes.player_id)
                   w.buyObject(mes.type,mes.player_id,mes.coord);
               break;
           default:

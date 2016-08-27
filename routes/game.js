@@ -13,7 +13,10 @@ router.get('/*', function(req, res, next) {
 });
 
 router.post('/', function (req, res,next) {
-    playerId = playerId > 3? 999 : playerId;
+    if(playerId > 3){
+        res.send(JSON.stringify(999));
+        return;
+    }
     res.send(JSON.stringify(playerId));
     w.createPlayer(req.body.username, playerId);
     players.push( { id: playerId, ip: req.connection.remoteAddress.replace('::ffff:', '') } );

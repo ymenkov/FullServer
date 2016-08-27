@@ -66,4 +66,15 @@ module.exports = [{
 	"attackSpeed": 2,
 	"attackRadius": 2,
 	"block": false
+},{
+	"type": "BLOCK",
+	"hp": 10000,
+	"price": 0,
+	"moveTargets": false,
+	"attackTargets": false,
+	"damage": 0,
+	"moveSpeed": 0,
+	"attackSpeed": 0,
+	"attackRadius": 0,
+	"block": true
 }];

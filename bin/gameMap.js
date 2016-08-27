@@ -29,9 +29,13 @@ function GameMap(width, height){
 		var finder = new PF.AStarFinder();
 
 		var objects = findObjectsInArray(all_obj, 'block', true);
-		objects.forEach(function(obj){ 
-			if((obj && obj.coord != to ) && (obj.hp!="del"))
-				grid.setWalkableAt(obj.coord[0], obj.coord[1], false);
+		objects.forEach(function(obj){
+			try {
+				if ((obj && obj.coord != to ) && (obj.hp != "del"))
+					grid.setWalkableAt(obj.coord[0], obj.coord[1], false);
+			} catch(e){
+				console.error(e.message);
+			}
 		});
 
 		return finder.findPath(from[0], from[1], to[0], to[1], grid);

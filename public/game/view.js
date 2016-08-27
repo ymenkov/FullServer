@@ -89,7 +89,7 @@ function VIEW(){
 	function findObjectById(id, type){
 		for(var i=0; i<allObject.length;i++){
 			if(allObject[i].internalId == id)
-				if(allObject[i].type == type)
+				//if(allObject[i].type == type)
 					return allObject[i];
 		}
 		return false;
@@ -188,11 +188,12 @@ function VIEW(){
 		arrAll.forEach(function(object){
 			switch (object.type){
 				case 'PLAYER':
-					var t = document.getElementById("Gold"); 
+					var t = document.getElementById("Gold");
 					t.innerHTML = "Gold : "+object.gold;
 					var t = document.getElementById("player");
 					t.innerHTML = "Имя: "+object.player_name;
 					t.style.backgroundColor = generateColor(object.player_id);
+					player_id = object.player_id;
 				break;
 
 				case 'WALL' :
@@ -201,12 +202,21 @@ function VIEW(){
 				break;
 
 				case 'PLACE' :
-				if (masM[object.coord[0]][object.coord[1]].style.backgroundColor!="black"){
-					masM[object.coord[0]][object.coord[1]].style.backgroundColor = "rgb(128, 128, 128)";
+					if (masM[object.coord[0]][object.coord[1]].style.backgroundColor!="black"){
+						masM[object.coord[0]][object.coord[1]].style.backgroundColor = "rgb(128, 128, 128)";
 					}
+					break;
+
+				case 'BLOCK' :
+					masM[object.coord[0]][object.coord[1]].style.backgroundColor="black";
 				break;
 
 				case 'CASTLE':
+					if(object.player_id == player_id) {
+						var t = document.getElementById("castle");
+						t.innerHTML = "Здоровье замка: " + object.hp;
+					}
+
 					masM[object.coord[0]][object.coord[1]].style.backgroundColor = generateColor(object.player_id);//"black";
 					rendO();
 					break;
@@ -218,7 +228,7 @@ function VIEW(){
 					function rendO(){
 						renderObject(object, images[object.type]);
 						if(object.attackTarget){
-							var target_obj = findObjectById(object.attackTarget, 'ORK'); //TODO - need target ID from server
+							var target_obj = findObjectById(object.attackTarget); //TODO - need target ID from server
 							if(target_obj)
 							renderAttackAnimation(object.type, object.coord, target_obj.coord);
 						}

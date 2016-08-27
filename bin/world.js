@@ -101,6 +101,7 @@ function World(width, height){
         this.attackTarget = false;
         this.block=config.block;
         this.spawnInterval = config.spawnInterval || 0;
+        this.price = config.price;
 
         this.attackCoolDown = (1000/this.attackSpeed).toFixed(0);
         this.moveCoolDown = (1000/this.moveSpeed).toFixed(0);
@@ -155,6 +156,9 @@ function World(width, height){
                     if (target.hp<=0){
                         //if (target.type=="CASTLE") {dieAllObject(target.player_id);}
                         target.hp="del";
+
+                        var player = findObjectInArray(players, 'id', gameObj.playerId);
+                        if (player) player.gold += target.price/4;
                     }
                 });
                 delete attackTargets;
@@ -219,8 +223,27 @@ function World(width, height){
         });
     }
 
+    function randomBlocks(num){
+        var all_castle = findObjectsInArray(all_obj, 'type', 'CASTLE');
+        var all_place = findObjectsInArray(all_obj, 'type', 'PLACE');
+        var i = 0;
+        while (i<num) {
+            var x = (Math.random()*width).toFixed(0);
+            var y = (Math.random()*height).toFixed(0);
+
+            if(all_castle.every(function (cc){ return cc.coord[0]!==x && cc.coord[1]!=y }))
+                if(all_place.every(function (cc){ return cc.coord[0]!==x && cc.coord[1]!=y })) {
+                    me.createObject("BLOCK", 999, [x, y]);
+                    i++;
+                }
+        }
+    }
+
     me.startWorld = function(){
+        if(!me.worldStart) randomBlocks(10);
+
         timerId = setInterval( worldInterval.bind(me), 100 );
+        me.worldStart = true;
     }
 
     me.pauseWorld = function(){
@@ -235,6 +258,14 @@ function World(width, height){
             if(array[i][param]==value)
                 return array[i];
         return false;
+    }
+
+    function findObjectsInArray(array, param, value){
+        var reaz = [];
+        for(var i=0; i<array.length; i++)
+            if(array[i][param]==value)
+                reaz.push(array[i]);
+        return reaz;
     }
 }
 

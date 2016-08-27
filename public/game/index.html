@@ -13,13 +13,14 @@
 <div id="controller">
     <span id='Gold'>Gold : 20</span>
     <span id='player'>Имя: </span>
+    <span id='castle'>Здоровье замка: </span>
     <input type="button" onclick="v.start_game();" value="Начать игру / скорость++"/>
     <hr>
     <hr>
     <input type="button" onclick="statusController=1;" value="Купить башню"/>
     <input type="button" onclick="statusController=2;" value="Купить территорию"/>
     <input type="button" onclick="v.buy_hunter();" value="Купить охотника"/>
-    <input type="button" onclick="v.buy_troll();" value="Купить троля"/>
+    <input type="button" onclick="v.buy_troll();" value="Купить троля" disabled/>
 </div>
 </body>
 
