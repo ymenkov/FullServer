@@ -117,7 +117,11 @@ function VIEW(){
 		'ORK' : 'photo.jpg',
 		'TOWER' : 'tower.png',
 		'HUNTER': 'hunter.jpg',
-		'CASTLE' : 'castle.png'
+		'CASTLE' : 'castle.png',
+		'TROLL': 'troll.png',
+		'ST' : 'st.png',
+		'WALL' : 'wall.png',
+		'WALLKILLER': 'WALLKILLER.png'
 	};
 
 	var colors = [

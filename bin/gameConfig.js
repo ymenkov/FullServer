@@ -1,11 +1,11 @@
 
 module.exports = [{
 	"type": "CASTLE",
-	"hp": 100,
+	"hp": 100000,
 	"price": 0,
 	"moveTargets": false,
-	"attackTargets": ["ORK", "HUNTER"],
-	"damage": 100,
+	"attackTargets": ["ORK", "HUNTER", "TROLL", "TOWER", "ST"],
+	"damage": 300,
 	"moveSpeed": 0,
 	"attackSpeed": 1,
 	"attackRadius": 4,
@@ -14,26 +14,37 @@ module.exports = [{
 }, {
 	"type": "ORK",
 	"hp": 1000,
-	"price": 0,
-	"moveTargets": ["TOWER","CASTLE", "HUNTER","ORK"],
-	"attackTargets": ["TOWER","CASTLE", "HUNTER","WALL","ORK"],
-	"damage": 100,
+	"price": 200,
+	"moveTargets": ["TOWER","CASTLE", "HUNTER","ORK", "TROLL"],
+	"attackTargets": ["TOWER","CASTLE", "HUNTER","WALL","ORK", "TROLL"],
+	"damage": 50,
 	"moveSpeed": 1,
 	"attackSpeed": 1,
 	"attackRadius": 2,
 	"block": false
 }, {
 	"type": "TOWER",
+	"hp": 1000,
+	"price": 200,
+	"moveTargets": false,
+	"attackTargets": ["ORK","HUNTER","TROLL"],
+	"damage": 250,
+	"moveSpeed": 1,
+	"attackSpeed": 1,
+	"attackRadius": 3,
+	"block": true
+},{
+	"type": "ST",
 	"hp": 10000,
 	"price": 1000,
 	"moveTargets": false,
-	"attackTargets": ["ORK","HUNTER"],
-	"damage": 250,
+	"attackTargets": ["ORK","HUNTER","TROLL"],
+	"damage": 300,
 	"moveSpeed": 1,
 	"attackSpeed": 1,
 	"attackRadius": 4,
 	"block": true
-},{
+}, {
 	"type": "PLACE",
 	"hp": 1,
 	"price": 100,
@@ -46,8 +57,8 @@ module.exports = [{
 	"block": false
 },{
 	"type": "WALL",
-	"hp": 1000,
-	"price": 100,
+	"hp": 600,
+	"price": 30,
 	"moveTargets": false,
 	"attackTargets": [],
 	"damage": 0,
@@ -58,9 +69,9 @@ module.exports = [{
 },{
 	"type": "HUNTER",
 	"hp": 1000,
-	"price": 1000,
-	"moveTargets": ["ORK"],
-	"attackTargets": ["ORK"],
+	"price": 250,
+	"moveTargets": ["ORK", "TROLL", "CASTLE"],
+	"attackTargets": ["ORK", "TROLL", "CASTLE"],
 	"damage": 500,
 	"moveSpeed": 2,
 	"attackSpeed": 2,
@@ -81,11 +92,22 @@ module.exports = [{
 	"type": "TROLL",
 	"hp": 10000,
 	"price": 500,
-	"moveTargets": ["TOWER"],
-	"attackTargets": ["TOWER"],
-	"damage": 100,
-	"moveSpeed": 10,
-	"attackSpeed": 5,
-	"attackRadius": 1,
+	"moveTargets": ["TOWER","WALL","ST"],
+	"attackTargets": ["TOWER","WALL","ST"],
+	"damage": 200,
+	"moveSpeed": 1,
+	"attackSpeed": 2,
+	"attackRadius": 2,
+	"block": false
+},{
+	"type": "WALLKILLER",
+	"hp": 3000,
+	"price": 200,
+	"moveTargets": ["WALL"],
+	"attackTargets": ["WALL"],
+	"damage": 75,
+	"moveSpeed": 1,
+	"attackSpeed": 2,
+	"attackRadius": 2,
 	"block": false
 }];

@@ -52,7 +52,7 @@ function World(width, height){
             tow:2,
             place:2,
             wall:3,
-            gold:100000
+            gold:3000
         };
 
         players.push(new_player);
