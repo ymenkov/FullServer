@@ -52,7 +52,7 @@ function World(width, height){
             tow:2,
             place:2,
             wall:3,
-            gold:1000
+            gold:100000
         };
 
         players.push(new_player);
@@ -156,11 +156,15 @@ function World(width, height){
                     if (target.hp<=0){
                         //if (target.type=="CASTLE") {dieAllObject(target.player_id);}
                         target.hp="del";
-
+                        if (target.type=="CASTLE"){
+                            me.delObjectsById(target.playerId);
+                            target.hp=50;
+                            target.playerId=this.playerId;
+                        }
                         var player = findObjectInArray(players, 'id', gameObj.playerId);
                         if (player) player.gold += target.price/4;
                     }
-                });
+                }.bind(this));
                 delete attackTargets;
 
             }
@@ -211,17 +215,24 @@ function World(width, height){
 
     function worldInterval(){
         all_obj.forEach(function(game_Object){
-            if(game_Object.hp!='del'){
+            if(game_Object.hp!='del') {
                 game_Object.move.call(game_Object, all_obj);
                 game_Object.attack.call(game_Object, all_obj);
 
-                if (game_Object.type=="CASTLE"){
+                if (game_Object.type == "CASTLE") {
                     me.createOrks.call(game_Object, game_Object.playerId);
                 }
-
             }
         });
     }
+    me.delObjectsById = function(player_id){
+        for (var i=0;i<=all_obj.length-1;i++){
+            if (all_obj[i].playerId==player_id){
+                all_obj[i].hp="del";
+            }
+        }
+    }
+
 
     function randomBlocks(num){
         var all_castle = findObjectsInArray(all_obj, 'type', 'CASTLE');

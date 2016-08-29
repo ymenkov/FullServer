@@ -53,14 +53,14 @@ socket.onmessage = function(event) {
 function priceObjects(config){
 	for (var i=0;i<=config.length-1;i++){
 		switch (config[i].type){
-			case "TOWER":
-				var element=document.getElementById('0');
-				element.value="Купить башню за "+config[i].price;
-				break;
-			case "PLACE":
-				var element=document.getElementById('1');
-				element.value="Купить территорию за "+config[i].price;
-				break;
+			// case "TOWER":
+			// 	var element=document.getElementById('0');
+			// 	element.value="Купить башню за "+config[i].price;
+			// 	break;
+			// case "PLACE":
+			// 	var element=document.getElementById('1');
+			// 	element.value="Купить территорию за "+config[i].price;
+			// 	break;
 			default:
 				if (config[i].price!==0) {
 					var element = document.getElementById("controller");
@@ -77,10 +77,16 @@ function priceObjects(config){
 							this.coord = coord;
 							this.player_id = player_id;
 						}
+						if ((this.block===false)&&(this.type!="PLACE")) {  //:(
+							var newOBB = new Obr("create", this.type, select, player_id);
+							socket.send(JSON.stringify(newOBB));
+							return;
+						}
 
-						var newOBB = new Obr("create", this.type, [width / 2, height / 2], player_id);
+						select={type:this.type};
+						console.log(select);
 
-						socket.send(JSON.stringify(newOBB));
+
 					};
 					element.appendChild(element2);
 				}

@@ -1,7 +1,7 @@
 
 module.exports = [{
 	"type": "CASTLE",
-	"hp": 100000,
+	"hp": 100,
 	"price": 0,
 	"moveTargets": false,
 	"attackTargets": ["ORK", "HUNTER"],
@@ -27,7 +27,7 @@ module.exports = [{
 	"hp": 10000,
 	"price": 1000,
 	"moveTargets": false,
-	"attackTargets": ["CASTLE", "ORK","HUNTER"],
+	"attackTargets": ["ORK","HUNTER"],
 	"damage": 250,
 	"moveSpeed": 1,
 	"attackSpeed": 1,
