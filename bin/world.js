@@ -193,10 +193,15 @@ function World(width, height){
         }
     }
 
-    me.buyObject = function(type, playerId, coordinate){
+    me.buyObject = function(type, playerId, coord){
+        var coordinate=coord;
         var config = findObjectInArray(gameObjects, 'type', type);
         var player = findObjectInArray(players, 'id', playerId);
+        if ((config.block==false)&&(config.type!="PLACE")){
+           coordinate= thrones[playerId];
+        }
         if( config && player && me.gameMap.checkPointToFree(coordinate,all_obj,config.block,type,playerId)){
+
             if(player.gold >= config.price){
                 player.gold -= config.price;
                 me.createObject(type, playerId, coordinate, config);

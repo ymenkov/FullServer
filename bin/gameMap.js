@@ -68,11 +68,11 @@ function GameMap(width, height){
 			if ((all_obj[i].coord[0]==coord[0]) && (all_obj[i].coord[1]==coord[1])&&(all_obj[i].playerId==player_id)){
 				if((config_block==true) && (all_obj[i].type=="PLACE")){
 					return true;
-				}	else {return false;}
-			} else if(config_block==false){
+				}	//else {return false;}
+			} 	else if(config_block==false){
 				return true;
 
-			}
+				}
 			
 		}
 	}	
