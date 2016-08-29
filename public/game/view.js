@@ -266,6 +266,7 @@ function VIEW(){
 						masM[object.coord[0]][object.coord[1]].style.backgroundColor = "rgb(128, 128, 128)";
 						masM[object.coord[0]][object.coord[1]].style.borderColor=generateColor(object.player_id);
 					}
+
 					break;
 
 				case 'BLOCK' :
