@@ -2,7 +2,7 @@
 module.exports = [{
 	"type": "CASTLE",
 	"hp": 100000,
-	"price": 1000,
+	"price": 0,
 	"moveTargets": false,
 	"attackTargets": ["ORK", "HUNTER"],
 	"damage": 100,
@@ -14,7 +14,7 @@ module.exports = [{
 }, {
 	"type": "ORK",
 	"hp": 1000,
-	"price": 100,
+	"price": 0,
 	"moveTargets": ["TOWER","CASTLE", "HUNTER","ORK"],
 	"attackTargets": ["TOWER","CASTLE", "HUNTER","WALL","ORK"],
 	"damage": 100,
@@ -24,11 +24,11 @@ module.exports = [{
 	"block": false
 }, {
 	"type": "TOWER",
-	"hp": 1000,
-	"price": 9,
+	"hp": 10000,
+	"price": 1000,
 	"moveTargets": false,
 	"attackTargets": ["CASTLE", "ORK","HUNTER"],
-	"damage": 100,
+	"damage": 250,
 	"moveSpeed": 1,
 	"attackSpeed": 1,
 	"attackRadius": 4,
@@ -58,7 +58,7 @@ module.exports = [{
 },{
 	"type": "HUNTER",
 	"hp": 1000,
-	"price": 100,
+	"price": 1000,
 	"moveTargets": ["ORK"],
 	"attackTargets": ["ORK"],
 	"damage": 500,
@@ -77,4 +77,15 @@ module.exports = [{
 	"attackSpeed": 0,
 	"attackRadius": 0,
 	"block": true
+},{
+	"type": "TROLL",
+	"hp": 10000,
+	"price": 500,
+	"moveTargets": ["TOWER"],
+	"attackTargets": ["TOWER"],
+	"damage": 100,
+	"moveSpeed": 10,
+	"attackSpeed": 5,
+	"attackRadius": 1,
+	"block": false
 }];

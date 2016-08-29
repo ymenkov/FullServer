@@ -233,14 +233,14 @@ function World(width, height){
 
             if(all_castle.every(function (cc){ return cc.coord[0]!==x && cc.coord[1]!=y }))
                 if(all_place.every(function (cc){ return cc.coord[0]!==x && cc.coord[1]!=y })) {
-                    me.createObject("BLOCK", 999, [x, y]);
+                    me.createObject("BLOCK", 999, [y, x]);
                     i++;
                 }
         }
     }
 
     me.startWorld = function(){
-        if(!me.worldStart) randomBlocks(10);
+       // if(!me.worldStart) randomBlocks(10);
 
         timerId = setInterval( worldInterval.bind(me), 100 );
         me.worldStart = true;

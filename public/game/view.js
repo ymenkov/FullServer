@@ -61,9 +61,29 @@ function priceObjects(config){
 				var element=document.getElementById('1');
 				element.value="Купить территорию за "+config[i].price;
 				break;
-			case "HUNTER":
-				var element=document.getElementById('2');
-				element.value="Купить охотника за "+config[i].price;
+			default:
+				if (config[i].price!==0) {
+					var element = document.getElementById("controller");
+					var element2 = document.createElement("input");
+					element2.value = config[i].type+" за "+ config[i].price;
+					element2.type = "button";
+					element2.onclick = tt.bind(config[i]);
+
+					function tt() {
+
+						function Obr(make, type, coord, player_id) {
+							this.make = make;
+							this.type = type;
+							this.coord = coord;
+							this.player_id = player_id;
+						}
+
+						var newOBB = new Obr("create", this.type, [width / 2, height / 2], player_id);
+
+						socket.send(JSON.stringify(newOBB));
+					};
+					element.appendChild(element2);
+				}
 				break;
 
 		}
@@ -238,11 +258,12 @@ function VIEW(){
 				case 'PLACE' :
 					if (masM[object.coord[0]][object.coord[1]].style.backgroundColor!="black"){
 						masM[object.coord[0]][object.coord[1]].style.backgroundColor = "rgb(128, 128, 128)";
+						masM[object.coord[0]][object.coord[1]].style.borderColor=generateColor(object.player_id);
 					}
 					break;
 
 				case 'BLOCK' :
-				//	masM[object.coord[0]][object.coord[1]].style.backgroundColor="black";
+					//masM[object.coord[0]][object.coord[1]].style.backgroundColor="black";
 				break;
 
 				case 'CASTLE':
@@ -272,7 +293,7 @@ function VIEW(){
 		});	
 	}
 
-	function Obr(make,type,coord,plyaer_id){
+	function Obr(make,type,coord,player_id){
 		this.make=make;
 		this.type=type;
 		this.coord=coord;
