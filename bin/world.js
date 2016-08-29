@@ -5,7 +5,7 @@ var gameObjects = require('./gameConfig');
 function World(width, height){
 
     var me = this;
-
+    var event = [];
     var all_obj = [];
     var players = [];
    // var playerId = 0;
@@ -80,8 +80,8 @@ function World(width, height){
         if(!this.spawn){
             this.spawn = this.spawnInterval*100;
             var config = findObjectInArray(gameObjects, 'type', "ORK");
-            me.createObject("ORK", player_id, thrones[player_id], config);
-            cooldSpawnOrks=0;
+            me.createObject("ORK", player_id, this.coord, config);
+           // cooldSpawnOrks=0;
         }
     }
 
@@ -156,11 +156,19 @@ function World(width, height){
                     if (target.hp<=0){
                         //if (target.type=="CASTLE") {dieAllObject(target.player_id);}
                         target.hp="del";
-                        if (target.type=="CASTLE"){
-                            me.delObjectsById(target.playerId);
-                            target.hp=50;
-                            target.playerId=this.playerId;
+                        var kar=0;
+                        for (var i=0;i<=all_obj.length-1;i++){
+                            if ((all_obj.type=="CASTLE")&&(all_obj[i].playerId==target.playerId) && (target.hp!="del")){
+                                kar=1;
+                            }
                         }
+
+                        if ((target.type=="CASTLE") && (kar!=1)){
+                            me.delObjectsById(target.playerId);
+                           // event.push({event:"die",type:"CASTLE",player:target.name});
+                            me.createObject('CASTLE', this.playerId, target.coord);
+                        }
+
                         var player = findObjectInArray(players, 'id', gameObj.playerId);
                         if (player) player.gold += target.price/4;
                     }
