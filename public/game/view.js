@@ -33,9 +33,44 @@ var v = new VIEW();
 v.render();
 
 socket.onmessage = function(event) {
-  arrAll = JSON.parse(event.data);
+
+
+	var kappaMes = JSON.parse(event.data);
+    //
+	 if (kappaMes.type=="EVENT"){
+	 	alert(kappaMes.info);
+		 return;
+	}
+	if ((kappaMes.type)&&(kappaMes.type=="INFO")){
+		priceObjects(kappaMes.config);
+		return;
+	}
+		arrAll = kappaMes;
+
 //  v.objectInMap.bind(this);
 };
+
+function priceObjects(config){
+	for (var i=0;i<=config.length-1;i++){
+		switch (config[i].type){
+			case "TOWER":
+				var element=document.getElementById('0');
+				element.value="Купить башню за "+config[i].price;
+				break;
+			case "PLACE":
+				var element=document.getElementById('1');
+				element.value="Купить территорию за "+config[i].price;
+				break;
+			case "HUNTER":
+				var element=document.getElementById('2');
+				element.value="Купить охотника за "+config[i].price;
+				break;
+
+		}
+
+	}
+
+}
 
 
 function searchPlace(i,j){
@@ -183,7 +218,6 @@ function VIEW(){
 
 	this.objectInMap = function (){
 		//arrAll = w.getAll(player_id);
-
 		removeIfDie(arrAll, allObject);
 		arrAll.forEach(function(object){
 			switch (object.type){
@@ -208,7 +242,7 @@ function VIEW(){
 					break;
 
 				case 'BLOCK' :
-					masM[object.coord[0]][object.coord[1]].style.backgroundColor="black";
+				//	masM[object.coord[0]][object.coord[1]].style.backgroundColor="black";
 				break;
 
 				case 'CASTLE':
@@ -248,6 +282,7 @@ function VIEW(){
 this.start_game=function(){
 	var newTower = new Obr("start","TOWER",[1,1],23)
 	socket.send(JSON.stringify(newTower));
+
 }
 
 this.buy_hunter=function(){
@@ -260,7 +295,6 @@ this.buy_troll=function(){
 	socket.send(JSON.stringify(newTower));
 }
 
-setInterval(this.objectInMap.bind(this), 100);
-
+	setInterval(this.objectInMap.bind(this), 100);
 }
 

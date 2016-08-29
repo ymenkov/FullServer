@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('FullServer:server');
 var http = require('http');
+var gameObjects = require('./gameConfig');
 
 /**
  * Get port from environment and store in Express.
@@ -119,6 +120,8 @@ webSocketServer.on('connection', function(ws) {
     var clientId = clients.push({ws: ws, playerId: playerId });
 
   console.log("новое соединение " + playerId + " : " + clientId);
+    ws.send(JSON.stringify({type:"INFO",config:gameObjects}));
+
 
 
   ws.on('message', function(message) {
@@ -128,6 +131,9 @@ webSocketServer.on('connection', function(ws) {
           case 'start':
               if(playerId === 0)
                 w.startWorld();
+                    for (var i=0;i<=clients.length-1;i++){
+                    clients[i].ws.send(JSON.stringify({type:"EVENT",info:"Игра начала / ускорилась"}));
+                    }
               break;
 
           case 'create':

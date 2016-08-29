@@ -25,7 +25,7 @@ module.exports = [{
 }, {
 	"type": "TOWER",
 	"hp": 1000,
-	"price": 100,
+	"price": 9,
 	"moveTargets": false,
 	"attackTargets": ["CASTLE", "ORK","HUNTER"],
 	"damage": 100,
