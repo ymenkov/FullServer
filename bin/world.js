@@ -52,7 +52,7 @@ function World(width, height){
             tow:2,
             place:2,
             wall:3,
-            gold:3000
+            gold:4000
         };
 
         players.push(new_player);
@@ -83,6 +83,12 @@ function World(width, height){
             me.createObject("ORK", player_id, this.coord, config);
            // cooldSpawnOrks=0;
         }
+
+        this.goldSpawn -= 100;
+        if(!this.goldSpawn || this.goldSpawn<=0){
+            this.goldSpawn = this.goldSpawnTime*1000;
+            players[player_id].gold += this.baseGoldSpawn;
+        }
     }
 
     function gameObject(id, type, playerId, coordinate, config){
@@ -102,6 +108,8 @@ function World(width, height){
         this.block=config.block;
         this.spawnInterval = config.spawnInterval || 0;
         this.price = config.price;
+        this.baseGoldSpawn = config.baseGoldSpawn;
+        this.goldSpawnTime = config.goldSpawnTime;
 
         this.attackCoolDown = (1000/this.attackSpeed).toFixed(0);
         this.moveCoolDown = (1000/this.moveSpeed).toFixed(0);
@@ -250,21 +258,27 @@ function World(width, height){
     function randomBlocks(num){
         var all_castle = findObjectsInArray(all_obj, 'type', 'CASTLE');
         var all_place = findObjectsInArray(all_obj, 'type', 'PLACE');
-        var i = 0;
+        var block_array = [];
+        var i = 0,
+            wL = height- 1,
+            hL = width-1;
         while (i<num) {
-            var x = (Math.random()*width).toFixed(0);
-            var y = (Math.random()*height).toFixed(0);
+            var x = (Math.random()*wL).toFixed(0);
+            var y = (Math.random()*hL).toFixed(0);
 
-            if(all_castle.every(function (cc){ return cc.coord[0]!==x && cc.coord[1]!=y }))
-                if(all_place.every(function (cc){ return cc.coord[0]!==x && cc.coord[1]!=y })) {
-                    me.createObject("BLOCK", 999, [y, x]);
-                    i++;
+            if(all_castle.every(function (cc){ return cc.coord[0]!==y && cc.coord[1]!=x }))
+                if(all_place.every(function (cc){ return cc.coord[0]!==y && cc.coord[1]!=x })) {
+                    if(~!block_array.indexOf(''+x+''+y)) {
+                        block_array.push('' + x + '' + y);
+                        me.createObject("BLOCK", 999, [y, x]);
+                        i++;
+                    } else console.log('repeat');
                 }
         }
     }
 
     me.startWorld = function(){
-       // if(!me.worldStart) randomBlocks(10);
+       if(!me.worldStart) randomBlocks(20);
 
         timerId = setInterval( worldInterval.bind(me), 100 );
         me.worldStart = true;

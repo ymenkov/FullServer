@@ -10,11 +10,13 @@ module.exports = [{
 	"attackSpeed": 1,
 	"attackRadius": 4,
 	"block": true,
-	"spawnInterval": 30
+	"spawnInterval": 30,
+	"baseGoldSpawn": 50,
+	"goldSpawnTime": 5
 }, {
 	"type": "ORK",
 	"hp": 1000,
-	"price": 200,
+	"price": 300,
 	"moveTargets": ["CASTLE", "HUNTER","ORK", "TROLL"],
 	"attackTargets": ["CASTLE", "HUNTER","ORK", "TROLL"],
 	"damage": 50,
@@ -24,10 +26,10 @@ module.exports = [{
 	"block": false
 }, {
 	"type": "TOWER",
-	"hp": 1000,
+	"hp": 3000,
 	"price": 200,
 	"moveTargets": false,
-	"attackTargets": ["ORK","HUNTER","TROLL"],
+	"attackTargets": ["ORK","HUNTER","TROLL","WALLKILLER"],
 	"damage": 250,
 	"moveSpeed": 1,
 	"attackSpeed": 1,
@@ -35,11 +37,11 @@ module.exports = [{
 	"block": true
 },{
 	"type": "ST",
-	"hp": 10000,
+	"hp": 15000,
 	"price": 1000,
 	"moveTargets": false,
 	"attackTargets": ["ORK","HUNTER","TROLL", "WALLKILLER"],
-	"damage": 300,
+	"damage": 350,
 	"moveSpeed": 1,
 	"attackSpeed": 1,
 	"attackRadius": 4,
@@ -57,7 +59,7 @@ module.exports = [{
 	"block": false
 },{
 	"type": "WALL",
-	"hp": 600,
+	"hp": 1200,
 	"price": 30,
 	"moveTargets": false,
 	"attackTargets": [],
@@ -69,10 +71,10 @@ module.exports = [{
 },{
 	"type": "HUNTER",
 	"hp": 1000,
-	"price": 250,
+	"price": 300,
 	"moveTargets": ["ORK", "TROLL", "CASTLE","WALLKILLER"],
 	"attackTargets": ["ORK", "TROLL", "CASTLE","WALLKILLER"],
-	"damage": 500,
+	"damage": 400,
 	"moveSpeed": 2,
 	"attackSpeed": 2,
 	"attackRadius": 2,
@@ -91,9 +93,9 @@ module.exports = [{
 },{
 	"type": "TROLL",
 	"hp": 10000,
-	"price": 500,
-	"moveTargets": ["TOWER","WALL","ST"],
-	"attackTargets": ["TOWER","WALL","ST"],
+	"price": 600,
+	"moveTargets": ["TOWER","ST","WALL"],
+	"attackTargets": ["TOWER","ST","WALL"],
 	"damage": 200,
 	"moveSpeed": 1,
 	"attackSpeed": 2,
